@@ -1,7 +1,7 @@
 // 遊戲參數設定
 export const CONFIG = {
   // 紅包生成間隔（毫秒）- 愈小紅包愈密集
-  envelopeSpawnIntervalMs: 1500,
+  envelopeSpawnIntervalMs: 1300,
   
   // 紅包從頂落到底的耗時（毫秒）- 愈小落得愈快
   envelopeFallDurationMs: 6000,
@@ -22,7 +22,7 @@ export const CONFIG = {
   scorePerGoldIngot: 1200,
   
   // 金元寶出現機率（0-1，例如 0.15 = 15%）
-  goldIngotSpawnRate: 0.15,
+  goldIngotSpawnRate: 0.2,
   
   // 紅包大小（像素）
   envelopeSize: 150,
