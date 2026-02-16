@@ -22,7 +22,7 @@ export const CONFIG = {
   scorePerGoldIngot: 1200,
   
   // 金元寶出現機率（0-1，例如 0.15 = 15%）
-  goldIngotSpawnRate: 0.1,
+  goldIngotSpawnRate: 0.15,
   
   // 紅包大小（像素）
   envelopeSize: 150,
