@@ -56,6 +56,7 @@ function Game({ onGameEnd }) {
         horizontalSpeed, // 水平速度
         throwAngle, // 拋射角度
         type: isGoldIngot ? 'goldIngot' : 'normal', // 紅包類型
+        collected: false, // 是否已被收集
       };
       newEnvelopes.push(newEnvelope);
     }
@@ -65,7 +66,10 @@ function Game({ onGameEnd }) {
 
   // 點擊紅包
   const handleEnvelopeClick = useCallback((id, type) => {
-    setEnvelopes(prev => prev.filter(env => env.id !== id));
+    // 標記為已收集，不立即移除
+    setEnvelopes(prev => prev.map(env => 
+      env.id === id ? { ...env, collected: true } : env
+    ));
     
     // 根據類型給予不同分數
     const scoreToAdd = type === 'goldIngot' ? CONFIG.scorePerGoldIngot : CONFIG.scorePerEnvelope;
@@ -76,6 +80,11 @@ function Game({ onGameEnd }) {
       coinSoundRef.current.currentTime = 0; // 重置到開始，支持快速連擊
       coinSoundRef.current.play().catch(err => console.log('音效播放失败:', err));
     }
+  }, []);
+
+  // 紅包飛行動畫完成後移除
+  const handleEnvelopeAnimationEnd = useCallback((id) => {
+    setEnvelopes(prev => prev.filter(env => env.id !== id));
   }, []);
 
   // 紅包落地
@@ -171,6 +180,7 @@ function Game({ onGameEnd }) {
             envelope={envelope}
             onClick={handleEnvelopeClick}
             onLanded={handleEnvelopeLanded}
+            onAnimationEnd={handleEnvelopeAnimationEnd}
           />
         ))}
       </div>

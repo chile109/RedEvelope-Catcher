@@ -5,6 +5,12 @@
   transition: none;
 }
 
+/* 已收集狀態 */
+.red-envelope.collected {
+  z-index: 100; /* 飛行時提高層級 */
+  cursor: default;
+}
+
 /* 擴大點擊區域的容器 */
 .envelope-hitbox {
   position: relative;
