@@ -4,10 +4,10 @@ export const CONFIG = {
   envelopeSpawnIntervalMs: 1500,
   
   // 紅包從頂落到底的耗時（毫秒）- 愈小落得愈快
-  envelopeFallDurationMs: 5000,
+  envelopeFallDurationMs: 6000,
   
   // 財神爺左右移動速度（像素/秒）
-  godOfWealthSpeed: 100,
+  godOfWealthSpeed: 150,
   
   // 財神爺左右移動範圍（百分比）[left%, right%]
   godOfWealthRange: [10, 90],
@@ -25,7 +25,7 @@ export const CONFIG = {
   goldIngotSpawnRate: 0.1,
   
   // 紅包大小（像素）
-  envelopeSize: 100,
+  envelopeSize: 150,
   
   // 財神爺大小（像素）
   godOfWealthSize: 200,
