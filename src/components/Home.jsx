@@ -1,3 +1,4 @@
+import { CONFIG } from '../config';
 import './Home.css';
 
 function Home({ onStart }) {
@@ -9,8 +10,8 @@ function Home({ onStart }) {
         開始遊戲
       </button>
       <div className="home-instructions">
-        <p>遊戲時間：30 秒</p>
-        <p>每個紅包：100 元</p>
+        <p>遊戲時間：{CONFIG.gameDurationSeconds} 秒</p>
+        <p>每個紅包：{CONFIG.scorePerEnvelope} 元</p>
       </div>
     </div>
   );

@@ -16,11 +16,11 @@ export const CONFIG = {
   gameDurationSeconds: 30,
   
   // 每個紅包的分數
-  scorePerEnvelope: 300,
+  scorePerEnvelope: 500,
   
   // 紅包大小（像素）
-  envelopeSize: 150,
+  envelopeSize: 100,
   
   // 財神爺大小（像素）
-  godOfWealthSize: 200,
+  godOfWealthSize: 150,
 };
