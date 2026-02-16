@@ -3,6 +3,7 @@
   cursor: pointer;
   z-index: 10;
   transition: none;
+  transform-origin: center center; /* 設定變形原點為中心 */
 }
 
 /* 已收集狀態 */

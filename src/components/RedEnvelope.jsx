@@ -36,19 +36,19 @@ function RedEnvelope({ envelope, onClick, onLanded, onAnimationEnd }) {
           if (progress < 0.15) {
             const scaleProgress = progress / 0.15;
             const scale = 1 + scaleProgress * 0.5; // 放大到 1.5 倍
-            ref.current.style.transform = `scale(${scale})`;
+            ref.current.style.transform = `translateX(-50%) scale(${scale})`;
             ref.current.style.opacity = 1;
           } 
           // 第二階段：保持放大（0.3-1.5s）
           else if (progress < 0.75) {
-            ref.current.style.transform = 'scale(1.5)';
+            ref.current.style.transform = 'translateX(-50%) scale(1.5)';
             ref.current.style.opacity = 1;
           }
           // 第三階段：淡出（1.5-2s）
           else {
             const fadeProgress = (progress - 0.75) / 0.25;
             const opacity = 1 - fadeProgress;
-            ref.current.style.transform = 'scale(1.5)';
+            ref.current.style.transform = 'translateX(-50%) scale(1.5)';
             ref.current.style.opacity = opacity;
           }
           
@@ -108,9 +108,12 @@ function RedEnvelope({ envelope, onClick, onLanded, onAnimationEnd }) {
         let currentX = lastX + horizontalDistance;
         let currentY = lastY + (currentVerticalSpeed * deltaTime);
         
-        // 檢查左右邊界反彈
-        const leftBound = 0;
-        const rightBound = 100;
+        // 計算紅包半徑佔屏幕的百分比（用於中心點碰撞檢測）
+        const envelopeHalfWidthPercent = (CONFIG.envelopeSize / 2 / windowWidth) * 100;
+        
+        // 檢查左右邊界反彈（以紅包中心點計算）
+        const leftBound = envelopeHalfWidthPercent; // 左邊界（中心點不能小於半徑）
+        const rightBound = 100 - envelopeHalfWidthPercent; // 右邊界（中心點不能大於 100% - 半徑）
         
         if (currentX < leftBound) {
           currentX = leftBound;
@@ -127,11 +130,12 @@ function RedEnvelope({ envelope, onClick, onLanded, onAnimationEnd }) {
         // 持續更新當前位置引用
         currentPosRef.current = { x: currentX, y: currentY };
         
+        // 使用 left + translateX(-50%) 讓 left 值代表中心點
         ref.current.style.left = `${currentX}%`;
         ref.current.style.top = `${currentY}px`;
         
         const rotation = totalElapsed * rotationSpeed * rotationDirection;
-        ref.current.style.transform = `rotate(${rotation}deg)`;
+        ref.current.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
         
         // 只有落地才消失（不會因為飛出左右而消失）
         if (currentY >= windowHeight) {
