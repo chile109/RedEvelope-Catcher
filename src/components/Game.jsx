@@ -11,6 +11,10 @@ function Game({ onGameEnd }) {
   const [godPosition, setGodPosition] = useState(50);
   const envelopeIdRef = useRef(0);
   const spawnIntervalRef = useRef(null);
+  
+  // 音效 refs
+  const bgmRef = useRef(null);
+  const coinSoundRef = useRef(null);
 
   const godPositionRef = useRef(godPosition);
 
@@ -42,12 +46,16 @@ function Game({ onGameEnd }) {
       const horizontalSpeed = (50 + Math.random() * 100) * throwDirection; // 水平速度 (px/s)
       const throwAngle = 30 + Math.random() * 30; // 拋射角度 30-60度
       
+      // 隨機決定是普通紅包還是金元寶
+      const isGoldIngot = Math.random() < CONFIG.goldIngotSpawnRate;
+      
       const newEnvelope = {
         id: envelopeIdRef.current++,
         x: godPositionRef.current + startOffset,
         y: 80, // 從財神爺位置開始（約100px高度處）
         horizontalSpeed, // 水平速度
         throwAngle, // 拋射角度
+        type: isGoldIngot ? 'goldIngot' : 'normal', // 紅包類型
       };
       newEnvelopes.push(newEnvelope);
     }
@@ -56,9 +64,18 @@ function Game({ onGameEnd }) {
   }, []);
 
   // 點擊紅包
-  const handleEnvelopeClick = useCallback((id) => {
+  const handleEnvelopeClick = useCallback((id, type) => {
     setEnvelopes(prev => prev.filter(env => env.id !== id));
-    setScore(prev => prev + CONFIG.scorePerEnvelope);
+    
+    // 根據類型給予不同分數
+    const scoreToAdd = type === 'goldIngot' ? CONFIG.scorePerGoldIngot : CONFIG.scorePerEnvelope;
+    setScore(prev => prev + scoreToAdd);
+    
+    // 播放金幣音效
+    if (coinSoundRef.current) {
+      coinSoundRef.current.currentTime = 0; // 重置到開始，支持快速連擊
+      coinSoundRef.current.play().catch(err => console.log('音效播放失败:', err));
+    }
   }, []);
 
   // 紅包落地
@@ -109,8 +126,29 @@ function Game({ onGameEnd }) {
     };
   }, [spawnEnvelope]);
 
+  // 背景音樂管理
+  useEffect(() => {
+    // 播放背景音樂
+    if (bgmRef.current) {
+      bgmRef.current.volume = 0.3; // 設定音量 30%
+      bgmRef.current.play().catch(err => console.log('背景音樂播放失败:', err));
+    }
+
+    // 組件卸載時停止音樂
+    return () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current.currentTime = 0;
+      }
+    };
+  }, []);
+
   return (
     <div className="game">
+      {/* 音效 */}
+      <audio ref={bgmRef} src="/bgm.mp3" loop />
+      <audio ref={coinSoundRef} src="/coin.mp3" />
+
       {/* 財神爺 */}
       <GodOfWealth isPlaying={true} onPositionChange={handleGodPositionChange} />
 

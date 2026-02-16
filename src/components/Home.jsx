@@ -11,7 +11,8 @@ function Home({ onStart }) {
       </button>
       <div className="home-instructions">
         <p>遊戲時間：{CONFIG.gameDurationSeconds} 秒</p>
-        <p>每個紅包：{CONFIG.scorePerEnvelope} 元</p>
+        <p>🧧 紅包：{CONFIG.scorePerEnvelope} 元</p>
+        <p>💰 金元寶：{CONFIG.scorePerGoldIngot} 元（稀有）</p>
       </div>
     </div>
   );

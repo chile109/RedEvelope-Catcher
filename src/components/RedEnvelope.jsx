@@ -65,13 +65,18 @@ function RedEnvelope({ envelope, onClick, onLanded }) {
   }, [envelope, onLanded]);
 
   const handleClick = () => {
-    onClick(envelope.id);
+    onClick(envelope.id, envelope.type);
   };
+
+  // 根據類型決定圖片和樣式
+  const isGoldIngot = envelope.type === 'goldIngot';
+  const imageSrc = isGoldIngot ? '/Yunbow.png' : '/red_envelope.png';
+  const altText = isGoldIngot ? '金元寶' : '紅包';
 
   return (
     <div
       ref={ref}
-      className="red-envelope"
+      className={`red-envelope ${isGoldIngot ? 'gold-ingot' : ''}`}
       onClick={handleClick}
       style={{
         width: `${CONFIG.envelopeSize}px`,
@@ -80,8 +85,8 @@ function RedEnvelope({ envelope, onClick, onLanded }) {
     >
       <div className="envelope-hitbox">
         <img 
-          src="/red_envelope.png" 
-          alt="紅包" 
+          src={imageSrc}
+          alt={altText}
           className="envelope-image"
         />
       </div>

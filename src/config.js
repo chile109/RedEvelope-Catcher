@@ -4,7 +4,7 @@ export const CONFIG = {
   envelopeSpawnIntervalMs: 1000,
   
   // 紅包從頂落到底的耗時（毫秒）- 愈小落得愈快
-  envelopeFallDurationMs: 3500,
+  envelopeFallDurationMs: 4000,
   
   // 財神爺左右移動速度（像素/秒）
   godOfWealthSpeed: 200,
@@ -15,12 +15,18 @@ export const CONFIG = {
   // 單局秒數
   gameDurationSeconds: 30,
   
-  // 每個紅包的分數
-  scorePerEnvelope: 1000,
+  // 普通紅包的分數
+  scorePerEnvelope: 600,
+  
+  // 金元寶的分數（稀有獎勵）
+  scorePerGoldIngot: 1500,
+  
+  // 金元寶出現機率（0-1，例如 0.15 = 15%）
+  goldIngotSpawnRate: 0.15,
   
   // 紅包大小（像素）
-  envelopeSize: 120,
+  envelopeSize: 150,
   
   // 財神爺大小（像素）
-  godOfWealthSize: 150,
+  godOfWealthSize: 200,
 };
