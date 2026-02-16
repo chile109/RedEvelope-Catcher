@@ -25,7 +25,7 @@ function RedEnvelope({ envelope, onClick, onLanded }) {
     
     // 隨機旋轉方向：順時針(1)或逆時針(-1)
     const rotationDirection = Math.random() < 0.5 ? 1 : -1;
-    const rotationSpeed = 180; // 度/秒
+    const rotationSpeed = 90; // 度/秒（降低旋轉速度，提升點擊準確度）
     
     const animate = () => {
       const elapsed = (Date.now() - startTime) / 1000; // 轉換為秒
@@ -78,11 +78,13 @@ function RedEnvelope({ envelope, onClick, onLanded }) {
         height: `${CONFIG.envelopeSize}px`,
       }}
     >
-      <img 
-        src="/red_envelope.png" 
-        alt="紅包" 
-        className="envelope-image"
-      />
+      <div className="envelope-hitbox">
+        <img 
+          src="/red_envelope.png" 
+          alt="紅包" 
+          className="envelope-image"
+        />
+      </div>
     </div>
   );
 }
